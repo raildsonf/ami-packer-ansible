@@ -16,7 +16,6 @@
         owner: qualys
         group: qualys
         mode: 0700
-        recurse: yes
     - name: Creating authorized_keys file and inserting ssh pub key
       copy:
         dest: /home/qualys/.ssh/authorized_keys
