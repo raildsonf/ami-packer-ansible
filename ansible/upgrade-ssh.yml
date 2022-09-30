@@ -1,0 +1,61 @@
+---
+- name: SSH Vulnerability Fix
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Install packages to upgrade SSH
+      yum:
+        name: ['gcc', 'openssl-devel', 'zlib-devel', 'autoconf']
+        state: present
+        update_cache: True
+      become: true
+
+    - name: Get and untar openssh-7.8p1.tar.gz
+      unarchive:
+        src: "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.8p1.tar.gz"
+        dest: "/home/ec2-user/"
+        mode: 0755
+        remote_src: yes
+
+    - name: Run configure on openssh
+      command: "./configure --prefix=/usr"
+      args:
+        chdir: /home/ec2-user/openssh-7.8p1/
+      become: true
+
+    - name: Run make on openssh
+      command: "make"
+      args:
+        chdir: /home/ec2-user/openssh-7.8p1/
+      become: true
+
+    - name: Run make install on openssh
+      command: "make install"
+      args:
+        chdir: /home/ec2-user/openssh-7.8p1/
+      become: true
+
+    - name: Updating Ciphers directive in /etc/ssh/sshd_config file
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^Ciphers'
+        line: 'Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr'
+      become: true
+
+    - name: Updating MACs directive in /etc/ssh/sshd_config file
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^MACs'
+        line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256'
+      become: true
+
+    - name: Updating KexAlgorithms directive in /etc/ssh/sshd_config file
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^KexAlgorithms'
+        line: 'KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,sntrup761x25519-sha512@openssh.com'
+      become: true
+
+    - name: Restarting sshd service
+      service: name=sshd state=restarted
+      become: true
