@@ -23,7 +23,7 @@
         owner: qualys
         group: qualys
         content: |
-          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDq+BAkRQ7ndHdrAkZUJ6pWki8UeXvtN978FufgGwgQp+hbq4PUev7SFtTxWwIEfbFxESopFxqTR0379f1oN2wad6TPghnFm26xUWIOaz3EBqI6zo3J5mqWFfaO/2AslJyesSZWpym/O7/OpsfK55nbWuNOHkEajeJyl7YNA2+FGcmo5fDn45kPp2Fn1EDlKRs2LMdkYfR+pEQIOL/I8ZoTA9NJW7PGQiRa9+IfnjxiMZHIAOFs17g5z1oSY8INQmZKB+qF4fAxUHtNb/GpQIxAfGkYVIVHEojFlQw8Jc3i4EoSfoXMRWt1H4q7aey7tLOyZ+63qUcoZt8BhVKU66k9Jytv9+QxW54p077UrRhGwozx5ThoIXrS6vU9BWBtUGZvCc/vPQBM3DekpbjLsAFP6zB6cXcScDBy5qm9MnA460/1DHRY7YbLZdxdOfl90KpbGsfLqNQjYIzg/5+sXATnkqvbwWACYVF2iK+dQBWAnVvQoXBns0TuNXAZQ5/MZfM= qualys@viper
+          ssh-rsa AAkjhkjkjkjhkjhkjkjkjhkjhkjkjkjhkjhkjhkjhkjhkjhkjhkjhkZfM= qualys@viper
     - name: Allow qualys user to have passwordless sudo
       lineinfile:
         dest: /etc/sudoers
